@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-const MovieSlider = ({ requestURL }) => {
-  const [movies, setMovies] = useState([])
-  useEffect(() => {
-    axios.get(requestURL).then((response) => {
-      setMovies(response.data.results)
-    })
-  }, [requestURL])
-  
-  console.log(movies)
+import MovieContext from '../context/MovieContext'
+const MovieSlider = () => {
+  const { movies } = useContext(MovieContext)
   return (
     <div className="flex flex-col items-center justify-center mx-auto mb-10">
       <h1 className="py-3 text-2xl text-center text-black">
@@ -33,7 +26,7 @@ const MovieSlider = ({ requestURL }) => {
                 </p>
               </div>
               <Link
-                to={`/movie${item.backdrop_path}`}
+                to={`/movie/${item.id}`}
                 className="w-full text-xl font-semibold text-center text-white bg-sky-500"
               >
                 Цагийн хуваарь ба захиалга
