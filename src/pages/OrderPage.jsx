@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
-import { useParams, useNavigate} from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import MovieContext from "../context/MovieContext";
+import UserContext from "../context/UserProvider";
 const OrderPage = () => {
   const { movies } = useContext(MovieContext);
+  const {adultAmount, setAdultAmount, chilrenAmount, setChildrenAmount} = useContext(UserContext)
+  console.log(adultAmount, chilrenAmount);
   const { id } = useParams();
   const foundMovie = movies.find((movie) => {
     return movie.id === parseInt(id);
   });
   console.log(foundMovie);
-  const history = useNavigate()
+  const history = useNavigate();
   const toSeatsPage = () => {
-    history('/seats')
-  }
+    history("/seats");
+  };
   return (
     <div className=" max-w-screen-xl mx-auto">
       <div className="w-full h-[550px] relative mb-36">
@@ -72,14 +75,39 @@ const OrderPage = () => {
           <form className="mt-4 w-80">
             <h1 className="text-2xl mb-5">Суудлын тоогоо сонгоно уу?</h1>
             <div className="flex justify-between my-2">
-              <label htmlFor="" className="text-xl mr-5 bg-gray-300 p-2 rounded-md">Том хүн</label>
-              <input type="number" className="border-2 p-2" />
+              <label
+                htmlFor=""
+                className="text-xl mr-5 bg-gray-300 p-2 rounded-md"
+              >
+                Том хүн
+              </label>
+              <input
+                type="number"
+                className="border-2 p-2"
+                value={adultAmount}
+                onChange={(e) => setAdultAmount(e.target.value)}
+              />
             </div>
             <div className="flex justify-between  ">
-              <label htmlFor="" className="text-xl mr-5 bg-gray-300 p-2 rounded-md">Хүүхэд</label>
-              <input type="number" className="border-2 p-2" />
+              <label
+                htmlFor=""
+                className="text-xl mr-5 bg-gray-300 p-2 rounded-md"
+              >
+                Хүүхэд
+              </label>
+              <input
+                type="number"
+                className="border-2 p-2"
+                value={chilrenAmount}
+                onChange={(e)=>setChildrenAmount(e.target.value)}
+              />
             </div>
-            <button onClick={toSeatsPage} className=" bg-sky-400 p-2 my-3 text-white text-xl rounded-lg">Тасалбар захиалах</button>
+            <button
+              onClick={toSeatsPage}
+              className=" bg-sky-400 p-2 my-3 text-white text-xl rounded-lg"
+            >
+              Тасалбар захиалах
+            </button>
           </form>
         </div>
       </div>

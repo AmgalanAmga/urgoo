@@ -3,7 +3,17 @@ import mongolia from '../images/mongolia.png'
 import america from '../images/united-states.png'
 import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { TiSocialYoutubeCircular } from 'react-icons/ti'
+import LoggedIn from './LoggedIn'
+import Nevt from './Nevt'
+import { useContext } from 'react'
+import UserContext from '../context/UserProvider'
+import Logout from './Logout'
 const Navbar = () => {
+  const { isLogin, isLogout, setLogout, setLogin } = useContext(UserContext)
+  const logoutF = () => {
+    setLogout(false)
+    setLogin(false)
+  }
   return (
     <div className="flex max-w-screen-xl mx-auto">
       <Link
@@ -19,7 +29,7 @@ const Navbar = () => {
             call center: 77117711
           </span>
           <Link to="/login" className="mx-6 text-[#EAE9E9]">
-            Нэвтрэх
+            {!isLogin ? <Nevt/> : <LoggedIn/>}
           </Link>
           <div className="flex items-center space-x-2">
             <FaInstagram className="bg-white rounded-sm cursor-pointer hover:scale-110" />
@@ -28,6 +38,9 @@ const Navbar = () => {
             <FaFacebookF className="bg-white rounded-sm cursor-pointer hover:scale-110" />
             <img src={america} alt="" className="w-5 cursor-pointer" />
             <img src={mongolia} alt="" className="w-5 cursor-pointer" />
+            <Link to='/' onClick={logoutF}>
+              {!isLogout ? '' : <Logout/>}
+            </Link>
           </div>
         </div>
         <div className="flex justify-end items-center bg-gradient-to-b from-[#D7D7D7] to-[#F6F6F6]">
