@@ -4,13 +4,15 @@ import requests from "../requests";
 const MovieContext = createContext();
 export const MovieProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
+  const [moviesDetails, setMoviesDetails] = useState([]);
+  
   useEffect(() => {
     axios.get(requests.requestPopular).then((response) => {
       setMovies(response.data.results);
     });
   }, [requests.requestPopular]);
   return (
-    <MovieContext.Provider value={{movies}}>
+    <MovieContext.Provider value={{movies, moviesDetails, setMoviesDetails}}>
       {children}
     </MovieContext.Provider>
   );

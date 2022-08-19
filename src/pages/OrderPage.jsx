@@ -3,16 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import MovieContext from "../context/MovieContext";
 import UserContext from "../context/UserProvider";
 const OrderPage = () => {
-  const { movies } = useContext(MovieContext);
+  const { movies, setMoviesDetails } = useContext(MovieContext);
   const {adultAmount, setAdultAmount, chilrenAmount, setChildrenAmount} = useContext(UserContext)
   console.log(adultAmount, chilrenAmount);
   const { id } = useParams();
   const foundMovie = movies.find((movie) => {
     return movie.id === parseInt(id);
   });
-  console.log(foundMovie);
   const history = useNavigate();
   const toSeatsPage = () => {
+    setMoviesDetails(foundMovie)
     history("/seats");
   };
   return (
