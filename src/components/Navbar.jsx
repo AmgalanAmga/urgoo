@@ -29,7 +29,7 @@ const Navbar = () => {
             call center: 77117711
           </span>
           <Link to="/login" className="mx-6 text-[#EAE9E9]">
-            {!isLogin ? <Nevt/> : <LoggedIn/>}
+            {!isLogin ? <Nevt /> : <LoggedIn />}
           </Link>
           <div className="flex items-center space-x-2">
             <FaInstagram className="bg-white rounded-sm cursor-pointer hover:scale-110" />
@@ -38,8 +38,8 @@ const Navbar = () => {
             <FaFacebookF className="bg-white rounded-sm cursor-pointer hover:scale-110" />
             <img src={america} alt="" className="w-5 cursor-pointer" />
             <img src={mongolia} alt="" className="w-5 cursor-pointer" />
-            <Link to='/' onClick={logoutF}>
-              {!isLogout ? '' : <Logout/>}
+            <Link to="/" onClick={logoutF}>
+              {!isLogout ? '' : <Logout />}
             </Link>
           </div>
         </div>

@@ -1,34 +1,34 @@
-import { initializeApp } from "firebase/app";
-import { Link, useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useContext } from "react";
-import UserContext from "../context/UserProvider";
+import { initializeApp } from 'firebase/app'
+import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { useContext } from 'react'
+import UserContext from '../context/UserProvider'
 const Login = () => {
   const history = useNavigate()
-  const { setLoggedIn, setLogin, setLogout } = useContext(UserContext);
+  const { setLoggedIn, setLogin, setLogout } = useContext(UserContext)
   const firebaseConfig = {
-    apiKey: "AIzaSyDeFZ5x_QRC7lOTms1PgCbaAQCtCD8grmU",
-    authDomain: "urgoo-30a17.firebaseapp.com",
-    projectId: "urgoo-30a17",
-    storageBucket: "urgoo-30a17.appspot.com",
-    messagingSenderId: "284433274365",
-    appId: "1:284433274365:web:a17a79236c04c244d97594",
-    measurementId: "G-LDYC67MC8P",
-  };
-  const app = initializeApp(firebaseConfig);
+    apiKey: 'AIzaSyDeFZ5x_QRC7lOTms1PgCbaAQCtCD8grmU',
+    authDomain: 'urgoo-30a17.firebaseapp.com',
+    projectId: 'urgoo-30a17',
+    storageBucket: 'urgoo-30a17.appspot.com',
+    messagingSenderId: '284433274365',
+    appId: '1:284433274365:web:a17a79236c04c244d97594',
+    measurementId: 'G-LDYC67MC8P',
+  }
+  const app = initializeApp(firebaseConfig)
   const handleLogin = (e) => {
-    e.preventDefault();
-    const { email, password } = e.target.elements;
-    const auth = getAuth(app);
+    e.preventDefault()
+    const { email, password } = e.target.elements
+    const auth = getAuth(app)
     signInWithEmailAndPassword(auth, email.value, password.value).then(
       (res) => {
-        setLoggedIn(res);
-        setLogin(true);
-        setLogout(true);
+        setLoggedIn(res)
+        setLogin(true)
+        setLogout(true)
         history('/')
-      }
-    );
-  };
+      },
+    )
+  }
   return (
     <div className="max-w-screen-xl mx-auto w-full h-[calc(100vh-120px)] flex items-center justify-center flex-col">
       <h1 className="mb-3 text-3xl">Нэвтрэх</h1>
@@ -58,7 +58,7 @@ const Login = () => {
         </Link>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

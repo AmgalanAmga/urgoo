@@ -1,20 +1,27 @@
-import React, { useContext, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import MovieContext from "../context/MovieContext";
-import UserContext from "../context/UserProvider";
+import React, { useContext, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import MovieContext from '../context/MovieContext'
+import UserContext from '../context/UserProvider'
 const OrderPage = () => {
-  const { movies, setMoviesDetails } = useContext(MovieContext);
-  const {adultAmount, setAdultAmount, chilrenAmount, setChildrenAmount} = useContext(UserContext)
-  console.log(adultAmount, chilrenAmount);
-  const { id } = useParams();
+  const { movies, setMoviesDetails, setTime } = useContext(MovieContext)
+  const {
+    adultAmount,
+    setAdultAmount,
+    childrenAmount,
+    setChildrenAmount,
+  } = useContext(UserContext)
+  const { id } = useParams()
   const foundMovie = movies.find((movie) => {
-    return movie.id === parseInt(id);
-  });
-  const history = useNavigate();
+    return movie.id === parseInt(id)
+  })
+  const history = useNavigate()
   const toSeatsPage = () => {
     setMoviesDetails(foundMovie)
-    history("/seats");
-  };
+    history('/seats')
+  }
+  const getTime = (t) => {
+    setTime(t)
+  }
   return (
     <div className=" max-w-screen-xl mx-auto">
       <div className="w-full h-[550px] relative mb-36">
@@ -51,26 +58,26 @@ const OrderPage = () => {
         <h1 className="text-4xl text-center">Цагийн хуваарь</h1>
         <div className="flex items-center justify-center flex-col">
           <div className="flex space-x-6 mt-10">
-            <button className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button id='12:00' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
               12:00
             </button>
-            <button className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button id='14:20' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
               14:20
             </button>
-            <button className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button id='16:20' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
               16:20
             </button>
-            <button className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button id='19:10' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
               19:10
             </button>
-            <button className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button id='21:40' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
               21:40
             </button>
           </div>
           <div className="text-2xl font-semibold mt-5">
             <h1>Тасалбарын үнэ</h1>
-            <h1>Том хүн 10000?₮</h1>
-            <h1>Том хүн 5000?₮</h1>
+            <h1>Том хүн 10000₮</h1>
+            <h1>Том хүн 5000₮</h1>
           </div>
           <form className="mt-4 w-80">
             <h1 className="text-2xl mb-5">Суудлын тоогоо сонгоно уу?</h1>
@@ -85,6 +92,7 @@ const OrderPage = () => {
                 type="number"
                 className="border-2 p-2"
                 value={adultAmount}
+                min={"0"}
                 onChange={(e) => setAdultAmount(e.target.value)}
               />
             </div>
@@ -98,8 +106,9 @@ const OrderPage = () => {
               <input
                 type="number"
                 className="border-2 p-2"
-                value={chilrenAmount}
-                onChange={(e)=>setChildrenAmount(e.target.value)}
+                min={"0"}
+                value={childrenAmount}
+                onChange={(e) => setChildrenAmount(e.target.value)}
               />
             </div>
             <button
@@ -112,7 +121,7 @@ const OrderPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderPage;
+export default OrderPage
