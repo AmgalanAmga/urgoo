@@ -1,10 +1,23 @@
-import React, { useState, useContext } from 'react'
+import { fireConfig } from '../keys'
+import { initializeApp } from 'firebase/app'
 import UserContext from '../context/UserProvider'
 import MovieContext from '../context/MovieContext'
+import React, { useState, useContext } from 'react'
+import { getFirestore, collection, setDoc, doc  } from 'firebase/firestore'
+
 const SeatsOrder = () => {
   const [seats, setSeats] = useState([])
+  const headers = [
+    'Таны нэр',
+    'Киноны нэр',
+    'Суудлын дугаар',
+    'Суудлын тоо',
+    'Цаг',
+    'Төлбөр',
+  ]
   const [isClicked, setIsClicked] = useState(false)
-  const { adultAmount, childrenAmount } = useContext(UserContext)
+  const { moviesDetails, time } = useContext(MovieContext)
+  const { adultAmount, childrenAmount, loggedIn } = useContext(UserContext)
   const seatsArray = new Array(15).fill(new Array(20).fill(''))
   const seatIds = (a, b, e) => {
     if (seats.length !== parseInt(adultAmount) + parseInt(childrenAmount)) {
@@ -14,16 +27,33 @@ const SeatsOrder = () => {
       setIsClicked(true)
     }
   }
-  const { moviesDetails, time } = useContext(MovieContext)
-
-  const headers = [
-    'Таны нэр',
-    'Киноны нэр',
-    'Суудлын дугаар',
-    'Суудлын тоо',
-    'Цаг',
-    'Төлбөр',
-  ]
+  const firebaseConfig = {
+    apiKey: fireConfig.apiKey,
+    authDomain: fireConfig.authDomain,
+    projectId: fireConfig.projectId,
+    storageBucket: fireConfig.storageBucket,
+    messagingSenderId: fireConfig.messagingSenderId,
+    appId: fireConfig.appId,
+    measurementId: fireConfig.measurementId,
+  }
+  const app = initializeApp(firebaseConfig)
+  const database = getFirestore(app)
+  const addToDatabase = async () => {
+    try {
+      const docRef = await setDoc(doc(database, 'orders'), {
+        name: loggedIn.user.email,
+        movieName: moviesDetails.title,
+        seatNums: seats,
+        amountSeats: parseInt(adultAmount) + parseInt(childrenAmount),
+        movieTime: time,
+      })
+      alert('Захиалга амжилттай')
+      console.log('Document written with ID: ', docRef.id)
+    } catch (e) {
+      console.error(e)
+      alert('Login or Register')
+    }
+  }
   return (
     <div className="max-w-screen-md mx-auto mt-10 flex flex-col items-center justify-center">
       <h1 className="mb-10">Суудлын дугаараа сонгоно уу?</h1>
@@ -55,7 +85,7 @@ const SeatsOrder = () => {
           ))}
         </div>
         <div className="flex justify-between w-full">
-          <h1>Amgalan</h1>
+          <h1>{loggedIn.user.email}</h1>
           <h1 className="w-28 truncate">{moviesDetails.title}</h1>
           <div>
             {seats.map((seat, k) => (
@@ -82,7 +112,10 @@ const SeatsOrder = () => {
           </div>
         </div>
       </div>
-      <button className="mt-5 bg-sky-400 p-3 rounded-lg uppercase text-white font-semibold text-lg">
+      <button
+        onClick={addToDatabase}
+        className="mt-5 bg-sky-400 p-3 rounded-lg uppercase text-white font-semibold text-lg"
+      >
         Төлбөр төлөх
       </button>
     </div>

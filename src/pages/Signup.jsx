@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import { initializeApp } from 'firebase/app'
 import { Link } from 'react-router-dom'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import {fireConfig} from "../keys"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 const Signup = () => {
   const [isCreated, setIsCreated] = useState(false)
   const [isExists, setIsExists] = useState(false)
   const firebaseConfig = {
-    apiKey: 'AIzaSyDeFZ5x_QRC7lOTms1PgCbaAQCtCD8grmU',
-    authDomain: 'urgoo-30a17.firebaseapp.com',
-    projectId: 'urgoo-30a17',
-    storageBucket: 'urgoo-30a17.appspot.com',
-    messagingSenderId: '284433274365',
-    appId: '1:284433274365:web:a17a79236c04c244d97594',
-    measurementId: 'G-LDYC67MC8P',
+    apiKey: fireConfig.apiKey,
+    authDomain: fireConfig.authDomain,
+    projectId: fireConfig.projectId,
+    storageBucket: fireConfig.storageBucket,
+    messagingSenderId: fireConfig.messagingSenderId,
+    appId: fireConfig.appId,
+    measurementId: fireConfig.measurementId,
   }
   const app = initializeApp(firebaseConfig)
   const handleSignUp = (e) => {

@@ -1,5 +1,5 @@
-const key = '9de14141e749dcfab3d2cb67660e5ec8'
-
+import {API_KEY} from "./keys"
+const key = API_KEY
 const requests = {
   requestPopular: `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=1`,
   requestUpcoming: `https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=1`,
