@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom'
 const SeatsOrder = () => {
   const [seats, setSeats] = useState([])
   const [fromData, setFromData] = useState([])
-  const [reservedSeats, setReservedSeats] = useState([])
   const headers = [
     'Таны нэр',
     'Киноны нэр',
@@ -35,7 +34,7 @@ const SeatsOrder = () => {
   const seatIds = (a, b, e) => {
     if (seats.length !== parseInt(adultAmount) + parseInt(childrenAmount)) {
       const rowFrom = String.fromCharCode(a + 65)
-      setSeats([...seats, { row: rowFrom, col: b + 1 }])
+      setSeats([...seats, { row: rowFrom, col: b + 1, sold: true }])
       e.target.style.visibility = 'hidden'
       setIsClicked(true)
     }
@@ -62,7 +61,6 @@ const SeatsOrder = () => {
           amountSeats: parseInt(adultAmount) + parseInt(childrenAmount),
           movieTime: time,
         })
-        console.log(docRef)
         alert('Захиалга амжилттай')
         navigate('/')
         console.log('Document written with ID: ', docRef.id)
@@ -74,18 +72,18 @@ const SeatsOrder = () => {
       navigate('/login')
     }
   }
+
   const read = async () => {
     const querySnapshot = await getDocs(collection(database, 'orders'))
     querySnapshot.forEach((doc) => {
       const data = doc.data()
       setFromData([...fromData, data])
-      setReservedSeats([...reservedSeats, data.seatNums])
     })
   }
   useEffect(() => {
     read()
   }, [])
-  
+
   return (
     <div className="max-w-screen-md mx-auto mt-10 flex flex-col items-center justify-center">
       <h1 className="mb-10">Суудлын дугаараа сонгоно уу?</h1>
