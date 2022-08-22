@@ -28,7 +28,13 @@ const Login = () => {
         setLogout(true)
         history('/')
       },
-    )
+    ).catch((err) => {
+      if (err.code === 'auth/wrong-password') {
+        alert('Нууц үг буруу байна')
+      } else {
+        alert("Email хаяг буруу байна")
+      }
+    })
   }
   return (
     <div className="max-w-screen-xl mx-auto w-full h-[calc(100vh-120px)] flex items-center justify-center flex-col">
