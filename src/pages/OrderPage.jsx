@@ -24,7 +24,7 @@ const OrderPage = () => {
   }
   return (
     <div className=" max-w-screen-xl mx-auto">
-      <div className="w-full h-[550px] relative mb-36">
+      <div className="w-full h-[550px] relative mb-48">
         <div className="absolute top-0 left-0 -z-10">
           <div className="">
             <img
@@ -84,7 +84,7 @@ const OrderPage = () => {
             <div className="flex justify-between my-2">
               <label
                 htmlFor=""
-                className="text-xl mr-5 bg-gray-300 p-2 rounded-md"
+                className="text-xl mr-5 bg-gray-300 p-2 whitespace-nowrap rounded-md"
               >
                 Том хүн
               </label>
