@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const SeatsOrder = () => {
   const [seats, setSeats] = useState([]);
   const [fromData, setFromData] = useState([]);
+  const [reserved, setReserved] = useState(false)
   const headers = [
     "Таны нэр",
     "Киноны нэр",
@@ -23,6 +24,7 @@ const SeatsOrder = () => {
     useContext(UserContext);
   const seatsArray = new Array(15).fill(new Array(20).fill(""));
   const seatIds = (a, b, e) => {
+    if(e.target.value === true) return e.target.style.visibility = "hidden"
     if (seats.length !== parseInt(adultAmount) + parseInt(childrenAmount)) {
       const rowFrom = String.fromCharCode(a + 65);
       setSeats([...seats, { row: rowFrom, col: b + 1, sold: true }]);
@@ -74,22 +76,7 @@ const SeatsOrder = () => {
   useEffect(() => {
     read();
   }, []);
-  const removeReservedSeats = () => {
-    fromData.map((data) => {
-      data.seatNums.filter((seat) => {
-        if (seat.sold === true) {
-          seatsArray.map((r, j) => {
-            if (seat.row === String.fromCharCode(65 + j)) {
-              r.map((col, i) => {
-                if(seat.col === i) return console.log(seat);
-              });
-            }
-          });
-        }
-      });
-    });
-  };
-  removeReservedSeats();
+
   return (
     <div className="max-w-screen-md mx-auto mt-10 flex flex-col items-center justify-center">
       <h1 className="mb-10">Суудлын дугаараа сонгоно уу?</h1>
@@ -101,6 +88,7 @@ const SeatsOrder = () => {
               <h1 className="mr-2">{rowLetter}</h1>
               {row.map((col, i) => (
                 <button
+                  style={reserved ? {visibility:'hidden'} : {visibility:'visible'}}
                   onClick={(e) => seatIds(j, i, e)}
                   key={i}
                   className="h-5 w-5 text-sm my-1 bg-gray-400 rounded-md"
