@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const SeatsOrder = () => {
   const [seats, setSeats] = useState([]);
   const [fromData, setFromData] = useState([]);
-  const [reserved, setReserved] = useState(false)
+  const [saved, setSaved] = useState(false);
   const headers = [
     "Таны нэр",
     "Киноны нэр",
@@ -24,7 +24,6 @@ const SeatsOrder = () => {
     useContext(UserContext);
   const seatsArray = new Array(15).fill(new Array(20).fill(""));
   const seatIds = (a, b, e) => {
-    if(e.target.value === true) return e.target.style.visibility = "hidden"
     if (seats.length !== parseInt(adultAmount) + parseInt(childrenAmount)) {
       const rowFrom = String.fromCharCode(a + 65);
       setSeats([...seats, { row: rowFrom, col: b + 1, sold: true }]);
@@ -69,14 +68,12 @@ const SeatsOrder = () => {
   const read = async () => {
     const querySnapshot = await getDocs(collection(database, "orders"));
     querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      setFromData([...fromData, data]);
+      doc.data().seatNums.map((seat) => setFromData([...fromData, seat]));
     });
   };
   useEffect(() => {
     read();
   }, []);
-
   return (
     <div className="max-w-screen-md mx-auto mt-10 flex flex-col items-center justify-center">
       <h1 className="mb-10">Суудлын дугаараа сонгоно уу?</h1>
@@ -86,16 +83,26 @@ const SeatsOrder = () => {
           return (
             <div className="flex justify-between gap-1" key={j}>
               <h1 className="mr-2">{rowLetter}</h1>
-              {row.map((col, i) => (
-                <button
-                  style={reserved ? {visibility:'hidden'} : {visibility:'visible'}}
-                  onClick={(e) => seatIds(j, i, e)}
-                  key={i}
-                  className="h-5 w-5 text-sm my-1 bg-gray-400 rounded-md"
-                >
-                  {i + 1}
-                </button>
-              ))}
+              {row.map((col, i) => {
+                fromData.map(data => {
+                  console.log(data);
+                  // if(data.sold === true) return setSaved(true)
+                })
+                return (
+                  <button
+                    style={
+                      saved
+                        ? { visibility: "hidden" }
+                        : { visibility: "visible" }
+                    }
+                    onClick={(e) => seatIds(j, i, e)}
+                    key={i}
+                    className="h-5 w-5 text-sm my-1 bg-gray-400 rounded-md"
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })}
             </div>
           );
         })}
