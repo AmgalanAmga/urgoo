@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, EffectFade } from 'swiper'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/effect-fade'
-import MovieContext from '../context/MovieContext'
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, EffectFade } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/effect-fade";
+import MovieContext from "../context/MovieContext";
 const MovieSlider = () => {
-  const { movies } = useContext(MovieContext)
+  const { movies } = useContext(MovieContext);
   return (
     <div className="flex flex-col items-center justify-center mx-auto mb-10">
       <h1 className="py-3 text-2xl text-center text-black">
@@ -21,7 +21,7 @@ const MovieSlider = () => {
           speed={800}
           slidesPerView={1}
           loop
-          className="mx-auto max-w-screen-xl"
+          className="mx-auto max-w-screen-xl w-[86%]"
         >
           {movies.map((item, id) => {
             return (
@@ -34,7 +34,7 @@ const MovieSlider = () => {
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                   alt={item.title}
                 />
-                <div className="absolute top-0 left-0 w-full h-[720px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
+                <div className="absolute top-0 left-0 w-full h-[618px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
                   <p className="flex items-center justify-center h-full text-3xl font-bold tracking-wider text-center">
                     {item.title}
                   </p>
@@ -46,12 +46,12 @@ const MovieSlider = () => {
                   Цагийн хуваарь ба захиалга
                 </Link>
               </SwiperSlide>
-            )
+            );
           })}
         </Swiper>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MovieSlider
+export default MovieSlider;
