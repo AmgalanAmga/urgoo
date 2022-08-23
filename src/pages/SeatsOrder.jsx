@@ -86,7 +86,7 @@ const SeatsOrder = () => {
               {row.map((col, i) => {
                 fromData.map(data => {
                   console.log(data);
-                  // if(data.sold === true) return setSaved(true)
+                  // if(data.sold === true) return setSaved(true) re
                 })
                 return (
                   <button
