@@ -6,7 +6,7 @@ import UserContext from '../context/UserProvider'
 import {fireConfig} from "../keys"
 const Login = () => {
   const history = useNavigate()
-  const { setLoggedIn, setLogin, setLogout } = useContext(UserContext)
+  const { setLoggedIn, setLogin, setLogout, isLogin } = useContext(UserContext)
   const firebaseConfig = {
     apiKey: fireConfig.apiKey,
     authDomain: fireConfig.authDomain,
