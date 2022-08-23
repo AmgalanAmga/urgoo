@@ -21,20 +21,20 @@ const MovieSlider = () => {
           speed={800}
           slidesPerView={1}
           loop
-          className="mx-auto max-w-screen-xl"
+          className="max-w-screen-xl mx-auto w-[85%]"
         >
           {movies.map((item, id) => {
             return (
               <SwiperSlide
                 key={id}
-                className="relative inline-block flex flex-col items-center justify-center p-2 cursor-pointer"
+                className="relative flex flex-col items-center justify-center inline-block p-2 cursor-pointer"
               >
                 <img
                   className="block object-cover w-full h-full"
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                   alt={item.title}
                 />
-                <div className="absolute top-0 left-0 w-full h-[720px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
+                <div className="absolute top-0 left-0 w-full h-[610px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
                   <p className="flex items-center justify-center h-full text-3xl font-bold tracking-wider text-center">
                     {item.title}
                   </p>

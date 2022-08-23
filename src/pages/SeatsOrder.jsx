@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 const SeatsOrder = () => {
   const [seats, setSeats] = useState([])
   const [fromData, setFromData] = useState([])
+  const [mTime, setMTime] = useState('')
   const headers = [
     'Таны нэр',
     'Киноны нэр',
@@ -24,7 +25,6 @@ const SeatsOrder = () => {
     'Төлбөр',
   ]
   const navigate = useNavigate()
-  const [isClicked, setIsClicked] = useState(false)
   const { moviesDetails, time } = useContext(MovieContext)
   const { adultAmount, childrenAmount, loggedIn, isLogin } = useContext(
     UserContext,
@@ -34,9 +34,11 @@ const SeatsOrder = () => {
   const seatIds = (a, b, e) => {
     if (seats.length !== parseInt(adultAmount) + parseInt(childrenAmount)) {
       const rowFrom = String.fromCharCode(a + 65)
-      setSeats([...seats, { row: rowFrom, col: b + 1, sold: true }])
+      setSeats([
+        ...seats,
+        { row: rowFrom, col: b + 1, sold: true, id: e.target.id },
+      ])
       e.target.style.visibility = 'hidden'
-      setIsClicked(true)
     }
   }
   const firebaseConfig = {
@@ -72,51 +74,60 @@ const SeatsOrder = () => {
       navigate('/login')
     }
   }
-
   const read = async () => {
+    const seatButtons = document.querySelectorAll('button')
     const querySnapshot = await getDocs(collection(database, 'orders'))
+    setMTime(time)
     querySnapshot.forEach((doc) => {
-      const data = doc.data()
-      setFromData([...fromData, data])
+      const name = doc.data().movieName
+      if (name === moviesDetails.title)
+        return doc.data().seatNums.map((seatN) => {
+          seatButtons.forEach((seat) => {
+            if (seat.getAttribute('id') === seatN.id)
+              return (seat.style.visibility = 'hidden')
+          })
+        })
     })
   }
   useEffect(() => {
     read()
   }, [])
-
   return (
-    <div className="max-w-screen-md mx-auto mt-10 flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center max-w-screen-md mx-auto mt-10">
       <h1 className="mb-10">Суудлын дугаараа сонгоно уу?</h1>
-      <div className="w-96 h-96 flex items-center justify-center flex-col">
+      <div className="flex flex-col items-center justify-center w-96 h-96">
         {seatsArray.map((row, j) => {
           let rowLetter = String.fromCharCode(65 + j)
           return (
             <div className="flex justify-between gap-1" key={j}>
               <h1 className="mr-2">{rowLetter}</h1>
-              {row.map((col, i) => (
-                <button
-                  onClick={(e) => seatIds(j, i, e)}
-                  key={i}
-                  className="h-5 w-5 text-sm my-1 bg-gray-400 rounded-md"
-                >
-                  {i + 1}
-                </button>
-              ))}
+              {row.map((col, i) => {
+                return (
+                  <button
+                    id={rowLetter + i}
+                    onClick={(e) => seatIds(j, i, e)}
+                    key={i}
+                    className="w-5 h-5 my-1 text-sm bg-gray-400 rounded-md"
+                  >
+                    {i + 1}
+                  </button>
+                )
+              })}
             </div>
           )
         })}
       </div>
-      <div className="border border-black p-4 rounded-xl mt-10">
+      <div className="p-4 mt-10 border border-black rounded-xl">
         <div className="flex justify-between w-full gap-x-3">
           {headers.map((head, l) => (
-            <h1 key={l} className="whitespace-nowrap text-xl font-semibold ">
+            <h1 key={l} className="text-xl font-semibold whitespace-nowrap ">
               {head}
             </h1>
           ))}
         </div>
         <div className="flex justify-between w-full">
           <h1>{isLogin ? loggedIn.user.email : 'User'}</h1>
-          <h1 className="w-28 truncate">{moviesDetails.title}</h1>
+          <h1 className="truncate w-28">{moviesDetails.title}</h1>
           <div>
             {seats.map((seat, k) => (
               <div key={k}>
@@ -144,7 +155,7 @@ const SeatsOrder = () => {
       </div>
       <button
         onClick={addToDatabase}
-        className="mt-5 bg-sky-400 p-3 rounded-lg uppercase text-white font-semibold text-lg"
+        className="p-3 mt-5 text-lg font-semibold text-white uppercase rounded-lg bg-sky-400"
       >
         Төлбөр төлөх
       </button>
