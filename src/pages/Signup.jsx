@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { initializeApp } from 'firebase/app'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import {fireConfig} from "../keys"
+import { fireConfig } from '../keys'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 const Signup = () => {
   const [isCreated, setIsCreated] = useState(false)
@@ -16,6 +16,7 @@ const Signup = () => {
     appId: fireConfig.appId,
     measurementId: fireConfig.measurementId,
   }
+  const navigate = useNavigate()
   const app = initializeApp(firebaseConfig)
   const handleSignUp = (e) => {
     e.preventDefault()
@@ -31,10 +32,7 @@ const Signup = () => {
     setIsCreated(true)
   }
   const closeBtn = () => {
-    return [
-      setIsCreated(false),
-    setIsExists(false)
-    ]
+    return [setIsCreated(false), setIsExists(false), navigate('/')]
   }
   return (
     <div className="relative max-w-screen-xl mx-auto w-full h-[calc(100vh-120px)] flex items-center justify-center flex-col">
@@ -104,7 +102,9 @@ const Signup = () => {
             className="absolute cursor-pointer top-2 right-2"
           />
           <span>
-            {isExists ? 'Бүртгэлтэй имэйл байна' : 'Хэрэглэгч амжилттай бүртгэгдлээ'}
+            {isExists
+              ? 'Бүртгэлтэй имэйл байна'
+              : 'Хэрэглэгч амжилттай бүртгэгдлээ'}
           </span>
         </div>
       </div>
