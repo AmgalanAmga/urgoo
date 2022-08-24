@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { useContext } from 'react'
 import UserContext from '../context/UserProvider'
-import {fireConfig} from "../keys"
+import {fireConfig} from "../key.js"
 const Login = () => {
   const history = useNavigate()
   const { setLoggedIn, setLogin, setLogout, isLogin } = useContext(UserContext)

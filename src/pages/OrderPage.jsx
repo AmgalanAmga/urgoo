@@ -1,27 +1,27 @@
-import React, { useContext, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import MovieContext from '../context/MovieContext'
-import UserContext from '../context/UserProvider'
+import React, { useContext, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import MovieContext from "../context/MovieContext";
+import UserContext from "../context/UserProvider";
 const OrderPage = () => {
-  const { movies, setMoviesDetails, setTime } = useContext(MovieContext)
-  const {
-    adultAmount,
-    setAdultAmount,
-    childrenAmount,
-    setChildrenAmount,
-  } = useContext(UserContext)
-  const { id } = useParams()
+  const { movies, setMoviesDetails, setTime, time } = useContext(MovieContext);
+  const { adultAmount, setAdultAmount, childrenAmount, setChildrenAmount } =
+    useContext(UserContext);
+  const { id } = useParams();
   const foundMovie = movies.find((movie) => {
-    return movie.id === parseInt(id)
-  })
-  const history = useNavigate()
-  const toSeatsPage = () => {
-    setMoviesDetails(foundMovie)
-    history('/seats')
-  }
-  const getTime = (t) => {
-    setTime(t)
-  }
+    return movie.id === parseInt(id);
+  });
+  const history = useNavigate();
+  const toSeatsPage = (e) => {
+    e.preventDefault()
+    if (!adultAmount && !childrenAmount) return alert('Хүний тоогоо сонгоно уу?')
+    if(!time) return alert('Цагаа сонгоно уу?')
+    return [setMoviesDetails(foundMovie), history("/seats")];
+  };
+  const getTime = (e) => {
+    const { id } = e.target
+    e.target.style.backgroundColor = "gray"
+    setTime(id);
+  };
   return (
     <div className=" max-w-screen-xl mx-auto">
       <div className="w-full h-[550px] relative mb-48">
@@ -58,19 +58,39 @@ const OrderPage = () => {
         <h1 className="text-4xl text-center">Цагийн хуваарь</h1>
         <div className="flex items-center justify-center flex-col">
           <div className="flex space-x-6 mt-10">
-            <button id='12:00' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button
+              id="12:00"
+              onClick={(e) => getTime(e)}
+              className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70"
+            >
               12:00
             </button>
-            <button id='14:20' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button
+              id="14:20"
+              onClick={(e) => getTime(e)}
+              className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70"
+            >
               14:20
             </button>
-            <button id='16:20' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button
+              id="16:20"
+              onClick={(e) => getTime(e)}
+              className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70"
+            >
               16:20
             </button>
-            <button id='19:10' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button
+              id="19:10"
+              onClick={(e) => getTime(e)}
+              className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70"
+            >
               19:10
             </button>
-            <button id='21:40' onClick={(e)=>getTime(e.target.id)} className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70">
+            <button
+              id="21:40"
+              onClick={(e) => getTime(e)}
+              className="bg-sky-500 text-xl text-white p-4 rounded-lg hover:bg-sky-500/70"
+            >
               21:40
             </button>
           </div>
@@ -112,7 +132,7 @@ const OrderPage = () => {
               />
             </div>
             <button
-              onClick={toSeatsPage}
+              onClick={(e) => toSeatsPage(e)}
               className=" bg-sky-400 p-2 my-3 text-white text-xl rounded-lg"
             >
               Тасалбар захиалах
@@ -121,7 +141,7 @@ const OrderPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrderPage
+export default OrderPage;

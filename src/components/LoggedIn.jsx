@@ -1,11 +1,9 @@
-import React, {useContext} from 'react'
-import UserContext from '../context/UserProvider'
+import React, { useContext } from "react";
+import UserContext from "../context/UserProvider";
 const LoggedIn = () => {
-    const { loggedIn } = useContext(UserContext)
+  const { loggedIn } = useContext(UserContext);
 
-  return (
-      <div>{ loggedIn.user.email}</div>
-  )
-}
+  return <div>{loggedIn.user.email}</div>;
+};
 
-export default LoggedIn
+export default LoggedIn;

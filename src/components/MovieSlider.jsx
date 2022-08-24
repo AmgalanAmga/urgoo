@@ -36,7 +36,7 @@ const MovieSlider = () => {
                   alt={item.title}
                 />
 
-                <div className="absolute top-0 left-0 w-full h-[618px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
+                <div className="absolute top-0 left-0 w-full h-[611px] text-white opacity-0 hover:bg-black/30 hover:opacity-100">
 
                   <p className="flex items-center justify-center h-full text-3xl font-bold tracking-wider text-center">
                     {item.title}

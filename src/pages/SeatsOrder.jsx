@@ -1,4 +1,4 @@
-import { fireConfig } from '../keys'
+import { fireConfig } from '../key.js'
 import { initializeApp } from 'firebase/app'
 import UserContext from '../context/UserProvider'
 import MovieContext from '../context/MovieContext'
@@ -25,7 +25,7 @@ const SeatsOrder = () => {
     'Төлбөр',
   ]
   const navigate = useNavigate()
-  const { moviesDetails, time } = useContext(MovieContext)
+  const { moviesDetails, time, setTime } = useContext(MovieContext)
   const { adultAmount, childrenAmount, loggedIn, isLogin } = useContext(
     UserContext,
   )
@@ -54,6 +54,7 @@ const SeatsOrder = () => {
   const app = initializeApp(firebaseConfig)
   const database = getFirestore(app)
   const addToDatabase = async () => {
+    if(seats.length === 0) return alert('Суудлаа сонгодоо')
     if (isLogin) {
       try {
         const docRef = await addDoc(collection(database, 'orders'), {
@@ -65,6 +66,7 @@ const SeatsOrder = () => {
         })
         alert('Захиалга амжилттай')
         navigate('/')
+        setTime()
         console.log('Document written with ID: ', docRef.id)
       } catch (e) {
         console.error(e.message)

@@ -1,13 +1,14 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import ComingSoon from './pages/ComingSoon'
-import OrderPage from './pages/OrderPage'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import MovieSlider from './components/MovieSlider'
-import SeatsOrder from './pages/SeatsOrder'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import ComingSoon from "./pages/ComingSoon";
+import OrderPage from "./pages/OrderPage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import MovieSlider from "./components/MovieSlider";
+import SeatsOrder from "./pages/SeatsOrder";
 
+//hi its comment
 const App = () => {
   return (
     <div>
@@ -21,7 +22,7 @@ const App = () => {
         <Route path="/seats" element={<SeatsOrder />} />
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
