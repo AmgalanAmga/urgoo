@@ -92,7 +92,8 @@ const SeatsOrder = () => {
     setMTime(time)
     querySnapshot.forEach((doc) => {
       const name = doc.data().movieName
-      if (name === moviesDetails.title)
+      const moTime = doc.data().movieTime
+      if (name === moviesDetails.title && time === moTime)
         return doc.data().seatNums.map((seatN) => {
           seatButtons.forEach((seat) => {
             if (seat.getAttribute('id') === seatN.id)
