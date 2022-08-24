@@ -26,9 +26,14 @@ const SeatsOrder = () => {
   ]
   const navigate = useNavigate()
   const { moviesDetails, time, setTime } = useContext(MovieContext)
-  const { adultAmount, childrenAmount, loggedIn, isLogin } = useContext(
-    UserContext,
-  )
+  const {
+    isLogin,
+    loggedIn,
+    adultAmount,
+    setAdultAmount,
+    childrenAmount,
+    setChildrenAmount,
+  } = useContext(UserContext)
 
   const seatsArray = new Array(15).fill(new Array(20).fill(''))
   const seatIds = (a, b, e) => {
@@ -54,8 +59,11 @@ const SeatsOrder = () => {
   const app = initializeApp(firebaseConfig)
   const database = getFirestore(app)
   const addToDatabase = async () => {
-    if(seats.length === 0) return alert('Суудлаа сонгодоо')
     if (isLogin) {
+      if (seats.length === 0)
+        return alert('Суудлаа сонгодоо, эсвэл зогсоогоороо үз!!!')
+      if (seats.length < parseInt(adultAmount) + parseInt(childrenAmount))
+        return alert(`Суудал дутуу сонгосон байна`)
       try {
         const docRef = await addDoc(collection(database, 'orders'), {
           name: loggedIn.user.email,
@@ -68,6 +76,8 @@ const SeatsOrder = () => {
         navigate('/')
         setTime()
         console.log('Document written with ID: ', docRef.id)
+        setAdultAmount(0)
+        setChildrenAmount(0)
       } catch (e) {
         console.error(e.message)
       }

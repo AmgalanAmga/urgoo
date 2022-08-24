@@ -28,9 +28,16 @@ const Navbar = () => {
           <span className="uppercase text-[#EAE9E9] whitespace-nowrap">
             call center: 77117711
           </span>
-          <Link to={!isLogin ? "/login" : "/#"} className="mx-6 text-[#EAE9E9]">
-            {!isLogin ? <Nevt /> : <LoggedIn />}
-          </Link>
+          {isLogin ? (
+            <div className="mx-6 text-[#EAE9E9]">
+              <LoggedIn />
+            </div>
+          ) : (
+            <Link to="/login" className="mx-6 text-[#EAE9E9]">
+              <Nevt />
+            </Link>
+          )}
+
           <div className="flex items-center space-x-2">
             <FaInstagram className="bg-white rounded-sm cursor-pointer hover:scale-110" />
             <TiSocialYoutubeCircular className="bg-white rounded-sm cursor-pointer hover:scale-110" />
