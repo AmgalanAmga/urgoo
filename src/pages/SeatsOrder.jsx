@@ -1,4 +1,4 @@
-import { fireConfig } from '../key.js'
+import { fireConfig } from '../keys'
 import { initializeApp } from 'firebase/app'
 import UserContext from '../context/UserProvider'
 import MovieContext from '../context/MovieContext'

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { initializeApp } from 'firebase/app'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { fireConfig } from '../key'
+import { fireConfig } from '../keys'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 const Signup = () => {
   const [isCreated, setIsCreated] = useState(false)
